@@ -1,13 +1,13 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect, useCallback, useLayoutEffect} from 'react';
 import {
   FlatList,
   Platform,
   StyleSheet,
-  TouchableHighlight,
   View,
   Button,
   ActivityIndicator,
   Text,
+  TouchableOpacity,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {Icon} from 'react-native-elements';
@@ -25,6 +25,7 @@ const ProductsOverviewScreen = props => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const products = useSelector(state => state.products.availableProducts);
   const dispatch = useDispatch();
+  const {navigation} = props;
 
   const loadProducts = useCallback(async () => {
     setError(null);
@@ -37,6 +38,33 @@ const ProductsOverviewScreen = props => {
     setIsRefreshing(false);
   }, [dispatch, setError]);
 
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Cart')}
+          style={styles.cartButton}>
+          <Icon
+            name="shopping-cart"
+            size={23}
+            color={Platform.OS === 'android' ? 'white' : Colors.primary}
+          />
+        </TouchableOpacity>
+      ),
+      headerLeft: () => (
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Cart')}
+          style={styles.menuButton}>
+          <Icon
+            name="menu"
+            size={23}
+            color={Platform.OS === 'android' ? 'white' : Colors.primary}
+          />
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
+
   useEffect(() => {
     setIsLoading(true);
     loadProducts().then(() => {
@@ -45,17 +73,15 @@ const ProductsOverviewScreen = props => {
   }, [dispatch, loadProducts]);
 
   useEffect(() => {
-    const willFocusSub = props.navigation.addListener(
-      'willFocus',
-      loadProducts,
-    );
+    const willFocusSub = navigation.addListener('willFocus', loadProducts);
+
     return () => {
       willFocusSub.remove();
     };
-  }, [loadProducts, props.navigation]);
+  }, [loadProducts, navigation]);
 
   const selectItemHandler = (id, title) => {
-    props.navigation.navigate('ProductDetail', {
+    navigation.navigate('ProductDetail', {
       productId: id,
       productTitle: title,
     });
@@ -167,8 +193,13 @@ const ProductsOverviewScreen = props => {
 
 const styles = StyleSheet.create({
   headerButton: {
-    alignItems: 'center',
     padding: 20,
+  },
+  cartButton: {
+    marginRight: 20,
+  },
+  menuButton: {
+    marginLeft: 20,
   },
   centered: {flex: 1, justifyContent: 'center', alignItems: 'center'},
 });

@@ -5,6 +5,7 @@ import {Platform} from 'react-native';
 
 import ProductsOverviewScreen from '../screens/shop/ProductsOverviewScreen';
 import ProductDetailScreen from '../screens/shop/ProductDetailScreen';
+import CartScreen from '../screens/shop/CartScreen';
 import Colors from '../constants/Colors';
 
 const Stack = createStackNavigator();
@@ -30,6 +31,11 @@ const ShopNavigator = () => {
         name="ProductDetail"
         component={ProductDetailScreen}
         options={({route}) => ({title: route.params.productTitle})}
+      />
+      <Stack.Screen
+        name="Cart"
+        component={CartScreen}
+        options={{title: 'Your Cart'}}
       />
     </Stack.Navigator>
   );

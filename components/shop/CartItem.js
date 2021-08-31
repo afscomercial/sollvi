@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Platform} from 'react-native';
-import {Icon} from 'react-native-elements';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const CartItem = props => {
   return (
@@ -15,11 +15,7 @@ const CartItem = props => {
           <TouchableOpacity
             onPress={props.onRemove}
             style={styles.deleteButton}>
-            <Icon
-              name={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
-              size={23}
-              color="red"
-            />
+            <Icon name="trash" size={23} color="red" />
           </TouchableOpacity>
         )}
       </View>
