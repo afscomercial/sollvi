@@ -53,7 +53,7 @@ const ProductsOverviewScreen = props => {
       ),
       headerLeft: () => (
         <TouchableOpacity
-          onPress={() => navigation.navigate('Cart')}
+          onPress={() => navigation.toggleDrawer()}
           style={styles.menuButton}>
           <Icon
             name="menu"
@@ -149,47 +149,6 @@ const ProductsOverviewScreen = props => {
     />
   );
 };
-
-// ProductsOverviewScreen.navigationOptions = navData => {
-//   return {
-//     headerTitle: 'All Products',
-// headerLeft: (
-//   <HeaderButtons HeaderButtonComponent={HeaderButton}>
-//     <Item
-//       title="Menu"
-//       iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'}
-//       onPress={() => {
-//         navData.navigation.toggleDrawer();
-//       }}
-//     />
-//   </HeaderButtons>
-// ),
-// headerRight: (
-// <TouchableHighlight
-//   onPress={() => {
-//     navData.navigation.navigate("Cart");
-//   }}
-// >
-//   <View style={styles.headerButton}>
-//     <Icon
-//       name={Platform.OS === "android" ? "md-cart" : "ios-cart"}
-//       size={23}
-//       color={Platform.OS === "android" ? "white" : Colors.primary}
-//     />
-//   </View>
-// </TouchableHighlight>
-//   <HeaderButtons HeaderButtonComponent={HeaderButton}>
-//     <Item
-//       title="Cart"
-//       iconName={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
-//       onPress={() => {
-//         navData.navigation.navigate('Cart');
-//       }}
-//     />
-//   </HeaderButtons>
-// ),
-//   };
-// };
 
 const styles = StyleSheet.create({
   headerButton: {

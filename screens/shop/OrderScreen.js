@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useCallback} from 'react';
+import React, {useEffect, useState, useCallback, useLayoutEffect} from 'react';
 import {
   Text,
   FlatList,
@@ -6,8 +6,11 @@ import {
   StyleSheet,
   Button,
   View,
+  TouchableOpacity,
+  Platform,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
+import {Icon} from 'react-native-elements';
 
 import OrderItem from '../../components/shop/OrderItem';
 import * as ordersActions from '../../store/actions/orders';
@@ -19,6 +22,24 @@ const OrderScreen = props => {
 
   const orders = useSelector(state => state.orders.orders);
   const dispatch = useDispatch();
+
+  const {navigation} = props;
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <TouchableOpacity
+          onPress={() => navigation.toggleDrawer()}
+          style={styles.menuButton}>
+          <Icon
+            name="menu"
+            size={23}
+            color={Platform.OS === 'android' ? 'white' : Colors.primary}
+          />
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
 
   const loadOrders = useCallback(async () => {
     setError(null);
@@ -76,6 +97,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  menuButton: {
+    marginLeft: 20,
   },
 });
 
