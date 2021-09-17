@@ -1,4 +1,4 @@
-type Products @model @auth(rules: [{allow: private}]) {
+type Products @model {
   id: ID!
   ownerId: String
   description: String
@@ -7,7 +7,8 @@ type Products @model @auth(rules: [{allow: private}]) {
   title: String
 }
 
-type Orders @model @auth(rules: [{allow: private}]) {
+
+type Orders @model {
   id: ID!
   ownerId: String
   cartItems: [CarItems]
@@ -22,4 +23,3 @@ type CarItems {
   quantity: Int
   sum: Float
 }
- 
